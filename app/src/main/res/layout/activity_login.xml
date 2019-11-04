@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".loginActivity">
+    
+    <RelativeLayout
+        android:layout_weight=".6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue">
+
+    <ImageView
+        android:id="@+id/ivKumbilLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/logo_desc"
+        app:srcCompat="@drawable/kumbil_logo" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_weight=".4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="username"
+                android:inputType="text"
+                android:layout_margin="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="password"
+                android:inputType="textPassword"
+                app:layout_constraintStart_toStartOf="@id/etUsername"
+                app:layout_constraintEnd_toEndOf="@id/etUsername"
+                app:layout_constraintTop_toBottomOf="@id/etUsername"/>
+
+            <Button
+                android:id="@+id/bLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/kumbil_button"
+                android:layout_marginHorizontal="30dp"
+                android:text="login"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@id/etPassword"
+                app:layout_constraintEnd_toEndOf="@id/etPassword"
+                app:layout_constraintTop_toBottomOf="@id/etPassword"
+                />
+
+            <TextView
+                android:id="@+id/tvForgotPassword"
+                style="@android:style/Widget.AutoCompleteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:inputType="textPersonName"
+                android:text="forgotPassword?"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/bLogin"
+                app:layout_constraintStart_toStartOf="@id/bLogin"
+                app:layout_constraintTop_toBottomOf="@id/bLogin" />
+
+
+            <Button
+                android:id="@+id/bCreateAccount"
+                android:layout_width="182dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/kumbil_button"
+                android:text="createnewaccount"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tvForgotPassword"
+                app:layout_constraintStart_toStartOf="@id/tvForgotPassword"
+                app:layout_constraintTop_toBottomOf="@id/tvForgotPassword" />
+        </androidx.constraintlayout.ConstraintLayout>
+    </RelativeLayout>
+</LinearLayout>
