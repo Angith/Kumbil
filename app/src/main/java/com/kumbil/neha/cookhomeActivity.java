@@ -2,8 +2,8 @@ package com.kumbil.neha;
 
 import android.app.Notification;
 import android.content.Intent;
-import androidx.core.app.FragmentTransaction;
-import androidx.core.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,7 +31,6 @@ public class cookhomeActivity extends AppCompatActivity {
         }
         ft.addToBackStack(null);
         cma.show(ft, "dialog");
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -16,6 +16,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".loginActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".Register2_Activity" />
+        <activity android:name=".CreatemenuActivity" />
+        <activity android:name=".DishActivity" />
+        <activity android:name=".EditdishActivity" />
+        <activity android:name=".CustomerActivity" />
+        <activity android:name=".RequestedOrdersActivity" />
+        <activity android:name=".cookhomeActivity" />
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".deliveryActivity" />
+        <activity android:name=".cart_list_layout" />
+        <activity android:name=".cook_list_layout" />
+        <activity android:name=".edit_activity" />
+        <activity android:name=".Address" />
+        <activity android:name=".PendingOrdersActivity" />
+        <activity android:name=".CooksMenuActivity"></activity>
     </application>
 
 </manifest>

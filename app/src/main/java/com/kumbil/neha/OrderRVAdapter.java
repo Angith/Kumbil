@@ -2,7 +2,7 @@ package com.kumbil.neha;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import androidx.constraintlayout.ConstraintLayout;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
