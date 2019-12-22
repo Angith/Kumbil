@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent i=new Intent(MainActivity.this,
-                        CooksMenuActivity.class);
+                        Register2_Activity.class);
                 startActivity(i);
                 finish();
             }

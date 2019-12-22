@@ -90,7 +90,7 @@ public class loginActivity extends AppCompatActivity {
 
         }
 
-        String url="https://www.grapestechs.com/BCA_Disaster/register.php";
+        String url="http://192.168.225.39/kumbil/login.php";
 
         List<NameValuePair> params=new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("Sname",username.getText().toString()));

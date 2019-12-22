@@ -1,6 +1,7 @@
 package com.kumbil.neha;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,4 +41,41 @@ public class editProfile extends AppCompatActivity {
 
 
     }
+    public boolean profileCheck(){
+        final AlertDialog.Builder sets = new AlertDialog.Builder(this);
+        sets.setTitle("Error");
+        sets.setIcon(android.R.drawable.btn_star_big_on);
+        sets.setPositiveButton("Close", null);
+        if (username.getText().length() == 0) {
+            sets.setMessage("Please input[name]");
+            sets.show();
+            username.requestFocus();
+            return false;
+
+        }
+
+
+        if (address.getText().length() == 0) {
+            sets.setMessage("Please input address");
+            sets.show();
+            address.requestFocus();
+            return false;
+
+        }
+        if (phone.getText().length() == 0) {
+            sets.setMessage("Please input phone");
+            sets.show();
+            phone.requestFocus();
+            return false;
+
+        }
+
+        else{
+            Intent i=new Intent(getApplicationContext(),profileActivity.class);
+            startActivity(i);
+        }
+        return true;
+    }
+
+
 }

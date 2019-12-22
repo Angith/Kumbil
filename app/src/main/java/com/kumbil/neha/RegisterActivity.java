@@ -17,7 +17,6 @@ public class RegisterActivity extends AppCompatActivity {
         Cook = (Button) findViewById(R.id.bCook);
         Delivery = (Button) findViewById(R.id.bDelivery);
         Buyer = (Button) findViewById(R.id.bBuyer);
-
         Cook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

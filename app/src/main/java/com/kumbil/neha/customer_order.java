@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class customer_order extends AppCompatActivity {
-EditText deliveryTo,qty,time;
+EditText deliveryTo,quantity,time;
 Button cancel,buy;
 
     @Override
@@ -39,7 +39,7 @@ Button cancel,buy;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_order);
         deliveryTo = (EditText) findViewById(R.id.etdelivery);
-        qty= (EditText) findViewById(R.id.etqty);
+        quantity= (EditText) findViewById(R.id.etqty);
         time= (EditText) findViewById(R.id.etTime);
         cancel= (Button) findViewById(R.id.bCancel);
         buy= (Button) findViewById(R.id.bRegister);
@@ -71,7 +71,7 @@ Button cancel,buy;
         sets.setIcon(android.R.drawable.btn_star_big_on);
         sets.setPositiveButton("Close", null);
         if (deliveryTo.getText().length() == 0) {
-            sets.setMessage("Please input[name]");
+            sets.setMessage("Please input delivery address");
             sets.show();
             deliveryTo.requestFocus();
             return false;
@@ -79,15 +79,15 @@ Button cancel,buy;
         }
 
 
-        if (qty.getText().length() == 0) {
-            sets.setMessage("Please input[password]");
+        if (quantity.getText().length() == 0) {
+            sets.setMessage("Please input quantity");
             sets.show();
-            qty.requestFocus();
+            quantity.requestFocus();
             return false;
 
         }
         if (time.getText().length() == 0) {
-            sets.setMessage("Please input[password]");
+            sets.setMessage("Please input time");
             sets.show();
             time.requestFocus();
             return false;
@@ -96,8 +96,8 @@ Button cancel,buy;
         String url="https://www.grapestechs.com/BCA_Disaster/register.php";
 
         List<NameValuePair> params=new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("Sdelivery",deliveryTo.getText().toString()));
-        params.add(new BasicNameValuePair("Sqty",qty.getText().toString()));
+        params.add(new BasicNameValuePair("SdeliveryTo",deliveryTo.getText().toString()));
+        params.add(new BasicNameValuePair("Sqty",quantity.getText().toString()));
         params.add(new BasicNameValuePair("Stime",time.getText().toString()));
 
 
