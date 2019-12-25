@@ -34,11 +34,21 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kumbil.neha.Network.ApiClient;
+import com.kumbil.neha.Network.ApiInterface;
+import com.kumbil.neha.models.Resp;
+import com.kumbil.neha.models.User;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Register2_Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     EditText username,password,place,email,phoneNo;
     Button Register;
     Spinner type;
     String []typedata={"Cook","Delivery","Customer"};
+    boolean isSuccess = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,22 +68,23 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(RegisterCheck()) {
-                    Toast.makeText(Register2_Activity.this,"Register success",Toast.LENGTH_SHORT).show();
-                    Intent i=new Intent(Register2_Activity.this,cookhomeActivity.class);
-                    startActivity(i);
-                }
-                else
-                {
-                    Toast.makeText(Register2_Activity.this, "failed", Toast.LENGTH_SHORT).show();
-                }
+//                if(RegisterCheck()) {
+//                    Toast.makeText(Register2_Activity.this,"Register success",Toast.LENGTH_SHORT).show();
+//                    Intent i=new Intent(Register2_Activity.this,cookhomeActivity.class);
+//                    startActivity(i);
+//                }
+//                else
+//                {
+//                    Toast.makeText(Register2_Activity.this, "failed", Toast.LENGTH_SHORT).show();
+//                }
+                RegisterCheck();
 
                 }
         });
 
 
     }
-    public boolean RegisterCheck(){
+    public void RegisterCheck(){
         Log.i("type", "@registercheck");
         final AlertDialog.Builder sets = new AlertDialog.Builder(this);
         sets.setTitle("Error");
@@ -83,7 +94,7 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
             sets.setMessage("Please input[name]");
             sets.show();
             username.requestFocus();
-            return false;
+//            return false;
 
         }
 
@@ -92,28 +103,28 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
             sets.setMessage("Please input password");
             sets.show();
             password.requestFocus();
-            return false;
+//            return false;
 
         }
         if (place.getText().length() == 0) {
             sets.setMessage("Please input[place]");
             sets.show();
             place.requestFocus();
-            return false;
+//            return false;
 
         }
         if (email.getText().length() == 0) {
             sets.setMessage("Please input email");
             sets.show();
             email.requestFocus();
-            return false;
+//            return false;
 
         }
         if (phoneNo.getText().length() == 0) {
             sets.setMessage("Please input[phone]");
             sets.show();
             phoneNo.requestFocus();
-            return false;
+//            return false;
 
         }
 
@@ -121,42 +132,69 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
 
         Log.i("type", userType);
 
-        String url="http://192.168.225.39/kumbil/register.php";
+//        String url="http://192.168.225.39/kumbil/register.php";
+//
+//        List<NameValuePair> params=new ArrayList<NameValuePair>();
+//        params.add(new BasicNameValuePair("username",username.getText().toString()));
+//        params.add(new BasicNameValuePair("password",password.getText().toString()));
+//        params.add(new BasicNameValuePair("place",place.getText().toString()));
+//        params.add(new BasicNameValuePair("email",email.getText().toString()));
+//        params.add(new BasicNameValuePair("phone",phoneNo.getText().toString()));
+//        params.add(new BasicNameValuePair("type",userType));
+//        Log.e("type", "@registercheck - b");
+//        String resultServer=getHttpPost(url,params);
+//        String strStatusId="1";
+//        String strError="Invalid Registration";
+//        JSONObject C;
+//        try
+//        {
+//            C=new JSONObject(resultServer);
+//            strStatusId=C.getString("status");
+//            strError=C.getString("message");
+//
+//        }
+//        catch(JSONException e)
+//        {
+//            e.printStackTrace();
+//        }
 
-        List<NameValuePair> params=new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("username",username.getText().toString()));
-        params.add(new BasicNameValuePair("password",password.getText().toString()));
-        params.add(new BasicNameValuePair("place",place.getText().toString()));
-        params.add(new BasicNameValuePair("email",email.getText().toString()));
-        params.add(new BasicNameValuePair("phone",phoneNo.getText().toString()));
-        params.add(new BasicNameValuePair("type",userType));
-        Log.e("type", "@registercheck - b");
-        String resultServer=getHttpPost(url,params);
-        String strStatusId="1";
-        String strError="Invalid Registration";
-        JSONObject C;
-        try
-        {
-            C=new JSONObject(resultServer);
-            strStatusId=C.getString("status");
-            strError=C.getString("message");
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        User user = new User(
+                username.getText().toString(),
+                phoneNo.getText().toString(),
+                email.getText().toString(),
+                place.getText().toString(),
+                password.getText().toString(),
+                userType, "false");
+        Call<Resp> registerCall = apiInterface.createuser(user);
+        registerCall.enqueue(new Callback<Resp>() {
+            @Override
+            public void onResponse(Call<Resp> call, Response<Resp> response) {
+//                int strStatusId= 1;
+//                String strError="Invalid Registration";
+                Log.i("response", response.toString());
+                Resp resp = response.body();
+                if(resp.getStatus() !=0)
+                {
+                    sets.setMessage(resp.getMessage());
+                    sets.show();
+                    isSuccess = false;
+//                    Toast.makeText(Register2_Activity.this, "failed", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.i("aaaaaaa", resp.toString());
+                    Toast.makeText(Register2_Activity.this,"Register success",Toast.LENGTH_SHORT).show();
+                    Intent i=new Intent(Register2_Activity.this,cookhomeActivity.class);
+                    startActivity(i);
+                }
+            }
 
-        }
-        catch(JSONException e)
-        {
-            e.printStackTrace();
-        }
-        if(!strStatusId.equals("0"))
-        {
-            sets.setMessage(strError);
-            sets.show();
-            return false;
-        }
-        else {
-            return true;
-        }
-
+            @Override
+            public void onFailure(Call<Resp> call, Throwable t) {
+                call.cancel();
+            }
+        });
     }
+
     public String getHttpPost(String url, List<NameValuePair> params) {
         StringBuilder str = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
