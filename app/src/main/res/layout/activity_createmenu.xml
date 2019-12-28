@@ -69,13 +69,13 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/bAdd"
+            android:id="@+id/bCancel"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:background="@color/green"
-            android:text="Add another"
+            android:text=" Cancel"
             android:textColor="@color/white"
             android:textStyle="bold" />
     </LinearLayout>

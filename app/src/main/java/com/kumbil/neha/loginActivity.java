@@ -17,6 +17,7 @@ import com.kumbil.neha.Network.ApiInterface;
 import com.kumbil.neha.models.LoginResp;
 import com.kumbil.neha.models.LoginRespUser;
 import com.kumbil.neha.models.loginUser;
+import com.kumbil.neha.shared.SharedData;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -86,16 +87,19 @@ public class loginActivity extends AppCompatActivity {
                         if (user.getType().equals("Cook")) {
                             Toast.makeText(loginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(loginActivity.this, cookhomeActivity.class);
+                            SharedData.setDefaults("ID", Integer.toString(user.getId()), GlobalContext.context);
                             startActivity(i);
                             finish();
                         } else if (user.getType().equals("Customer")) {
                             Toast.makeText(loginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(loginActivity.this, CustomerActivity.class);
+                            SharedData.setDefaults("ID", Integer.toString(user.getId()), GlobalContext.context);
                             startActivity(i);
                             finish();
                         } else if (user.getType().equals("Delivery")) {
                             Toast.makeText(loginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(loginActivity.this, CustomerActivity.class);
+                            SharedData.setDefaults("ID", Integer.toString(user.getId()), GlobalContext.context);
                             startActivity(i);
                             finish();
                         } else {
