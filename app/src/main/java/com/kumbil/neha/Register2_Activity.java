@@ -85,7 +85,6 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
 
     }
     public void RegisterCheck(){
-        Log.i("type", "@registercheck");
         final AlertDialog.Builder sets = new AlertDialog.Builder(this);
         sets.setTitle("Error");
         sets.setIcon(android.R.drawable.btn_star_big_on);
@@ -94,7 +93,6 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
             sets.setMessage("Please input[name]");
             sets.show();
             username.requestFocus();
-//            return false;
 
         }
 
@@ -103,60 +101,26 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
             sets.setMessage("Please input password");
             sets.show();
             password.requestFocus();
-//            return false;
 
         }
         if (place.getText().length() == 0) {
             sets.setMessage("Please input[place]");
             sets.show();
             place.requestFocus();
-//            return false;
-
         }
         if (email.getText().length() == 0) {
             sets.setMessage("Please input email");
             sets.show();
             email.requestFocus();
-//            return false;
-
         }
         if (phoneNo.getText().length() == 0) {
             sets.setMessage("Please input[phone]");
             sets.show();
             phoneNo.requestFocus();
-//            return false;
-
         }
 
         String userType = type.getSelectedItem().toString();
 
-        Log.i("type", userType);
-
-//        String url="http://192.168.225.39/kumbil/register.php";
-//
-//        List<NameValuePair> params=new ArrayList<NameValuePair>();
-//        params.add(new BasicNameValuePair("username",username.getText().toString()));
-//        params.add(new BasicNameValuePair("password",password.getText().toString()));
-//        params.add(new BasicNameValuePair("place",place.getText().toString()));
-//        params.add(new BasicNameValuePair("email",email.getText().toString()));
-//        params.add(new BasicNameValuePair("phone",phoneNo.getText().toString()));
-//        params.add(new BasicNameValuePair("type",userType));
-//        Log.e("type", "@registercheck - b");
-//        String resultServer=getHttpPost(url,params);
-//        String strStatusId="1";
-//        String strError="Invalid Registration";
-//        JSONObject C;
-//        try
-//        {
-//            C=new JSONObject(resultServer);
-//            strStatusId=C.getString("status");
-//            strError=C.getString("message");
-//
-//        }
-//        catch(JSONException e)
-//        {
-//            e.printStackTrace();
-//        }
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         User user = new User(
@@ -164,24 +128,20 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
                 phoneNo.getText().toString(),
                 email.getText().toString(),
                 place.getText().toString(),
-                password.getText().toString(),
-                userType, "false");
+                userType,
+                password.getText().toString(), "false");
         Call<Resp> registerCall = apiInterface.createuser(user);
         registerCall.enqueue(new Callback<Resp>() {
             @Override
             public void onResponse(Call<Resp> call, Response<Resp> response) {
-//                int strStatusId= 1;
-//                String strError="Invalid Registration";
-                Log.i("response", response.toString());
+
                 Resp resp = response.body();
                 if(resp.getStatus() !=0)
                 {
                     sets.setMessage(resp.getMessage());
                     sets.show();
                     isSuccess = false;
-//                    Toast.makeText(Register2_Activity.this, "failed", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.i("aaaaaaa", resp.toString());
                     Toast.makeText(Register2_Activity.this,"Register success",Toast.LENGTH_SHORT).show();
                     Intent i=new Intent(Register2_Activity.this,cookhomeActivity.class);
                     startActivity(i);
@@ -193,38 +153,6 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
                 call.cancel();
             }
         });
-    }
-
-    public String getHttpPost(String url, List<NameValuePair> params) {
-        StringBuilder str = new StringBuilder();
-        HttpClient client = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(url);
-        Log.i("type", "@getHTTP_POST");
-
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(params));
-            HttpResponse response = client.execute(httpPost);
-            StatusLine statusLine;
-            statusLine = response.getStatusLine();
-            int statusCode = statusLine.getStatusCode();
-            if (statusCode == 200) { // Status OK
-                HttpEntity entity = response.getEntity();
-                InputStream content = entity.getContent();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    str.append(line);
-                }
-                Log.i("type", line);
-            } else {
-                Log.e("Log", "Failed to download result..");
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return str.toString();
     }
 
     @Override
