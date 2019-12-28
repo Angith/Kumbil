@@ -12,25 +12,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.kumbil.neha.Network.ApiClient;
+import com.kumbil.neha.Network.ApiInterface;
+import com.kumbil.neha.models.LoginResp;
+import com.kumbil.neha.models.LoginRespUser;
+import com.kumbil.neha.models.loginUser;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class loginActivity extends AppCompatActivity {
     EditText username,password;
@@ -50,13 +40,7 @@ public class loginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(LoginCheck()) {
-
-                }
-                else
-                {
-                    Toast.makeText(loginActivity.this, "failed", Toast.LENGTH_SHORT).show();
-                }
+                login();
             }
         });
         createnewaccount.setOnClickListener(new View.OnClickListener() {
@@ -68,90 +52,69 @@ public class loginActivity extends AppCompatActivity {
         });
 
     }
-    public boolean LoginCheck(){
+    public void login(){
         final AlertDialog.Builder sets = new AlertDialog.Builder(this);
         sets.setTitle("Error");
         sets.setIcon(android.R.drawable.btn_star_big_on);
         sets.setPositiveButton("Close", null);
         if (username.getText().length() == 0) {
-            sets.setMessage("Please input[name]");
+            sets.setMessage("Please input name");
             sets.show();
             username.requestFocus();
-            return false;
-
         }
-
-
-        if (password.getText().length() == 0) {
-            sets.setMessage("Please input[password]");
+        else if (password.getText().length() == 0) {
+            sets.setMessage("Please input password");
             sets.show();
             password.requestFocus();
-            return false;
-
-        }
-
-        String url="http://192.168.225.39/kumbil/login.php";
-
-        List<NameValuePair> params=new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("Sname",username.getText().toString()));
-        params.add(new BasicNameValuePair("Spassword",password.getText().toString()));
-
-        String resultServer=getHttpPost(url,params);
-        String strStatusId="0";
-        String strError="Invalid Registration";
-        JSONObject C;
-        try
-        {
-            C=new JSONObject(resultServer);
-            strStatusId=C.getString("StatusID");
-            strError=C.getString("Error");
-
-        }
-        catch(JSONException e)
-        {
-            e.printStackTrace();
-        }
-        if(strStatusId.equals("0"))
-        {
-            sets.setMessage(strError);
-            sets.show();
-            return false;
         }
         else {
-            Toast.makeText(this,"login success",Toast.LENGTH_SHORT).show();
-            Intent i=new Intent(loginActivity.this,cookhomeActivity.class);
-            startActivity(i);
-        }
-        return true;
-    }
-    public String getHttpPost(String url, List<NameValuePair> params) {
-        StringBuilder str = new StringBuilder();
-        HttpClient client = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(url);
 
-
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(params));
-            HttpResponse response = client.execute(httpPost);
-            StatusLine statusLine;
-            statusLine = response.getStatusLine();
-            int statusCode = statusLine.getStatusCode();
-            if (statusCode == 200) { // Status OK
-                HttpEntity entity = response.getEntity();
-                InputStream content = entity.getContent();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    str.append(line);
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+            loginUser user = new loginUser(
+                    username.getText().toString(),
+                    password.getText().toString());
+            Call<LoginResp> loginCall = apiInterface.login(user);
+            loginCall.enqueue(new Callback<LoginResp>() {
+                @Override
+                public void onResponse(Call<LoginResp> call, Response<LoginResp> response) {
+                    LoginResp resp = response.body();
+                    if (resp.getStatus() != 0) {
+                        sets.setMessage(resp.getMessage());
+                        sets.show();
+                    } else {
+                        LoginRespUser user = resp.getUser();
+                        if (user.getType().equals("Cook")) {
+                            Toast.makeText(loginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(loginActivity.this, cookhomeActivity.class);
+                            startActivity(i);
+                            finish();
+                        } else if (user.getType().equals("Customer")) {
+                            Toast.makeText(loginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(loginActivity.this, CustomerActivity.class);
+                            startActivity(i);
+                            finish();
+                        } else if (user.getType().equals("Delivery")) {
+                            Toast.makeText(loginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(loginActivity.this, CustomerActivity.class);
+                            startActivity(i);
+                            finish();
+                        } else {
+                            Toast.makeText(loginActivity.this, "Login failed : Something went wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
-            } else {
-                Log.e("Log", "Failed to download result..");
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+                @Override
+                public void onFailure(Call<LoginResp> call, Throwable t) {
+                    call.cancel();
+                }
+            });
         }
-        return str.toString();
     }
 }
+
+
+
+
+
+

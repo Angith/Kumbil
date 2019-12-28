@@ -26,7 +26,7 @@
         android:layout_weight=".4"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.constraintlayout.ConstraintLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <EditText
@@ -93,6 +93,6 @@
                 app:layout_constraintEnd_toEndOf="@id/tvForgotPassword"
                 app:layout_constraintStart_toStartOf="@id/tvForgotPassword"
                 app:layout_constraintTop_toBottomOf="@id/tvForgotPassword" />
-        </androidx.constraintlayout.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
     </RelativeLayout>
 </LinearLayout>
