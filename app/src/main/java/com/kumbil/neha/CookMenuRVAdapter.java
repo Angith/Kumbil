@@ -10,31 +10,31 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MenuRVAdapter extends RecyclerView.Adapter<MenuRVAdapter.MenuRVViewHolder> {
+public class CookMenuRVAdapter extends RecyclerView.Adapter<CookMenuRVAdapter.CookMenuRVViewHolder> {
 
     public ArrayList<CookMenu> cookMenus;
     public Context mContext;
 
-    public MenuRVAdapter(ArrayList<CookMenu> data, Context context) {
+    public CookMenuRVAdapter(ArrayList<CookMenu> data, Context context) {
         this.cookMenus = data;
         this.mContext = context;
     }
 
     @NonNull
     @Override
-    public MenuRVViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public CookMenuRVViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.menu_list_layout, viewGroup, false);
-        return new MenuRVAdapter.MenuRVViewHolder(view);
+        View view = inflater.inflate(R.layout.cook_menu_list_layout, viewGroup, false);
+        return new CookMenuRVAdapter.CookMenuRVViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MenuRVViewHolder MenuRVViewHolder, int position) {
+    public void onBindViewHolder(@NonNull CookMenuRVViewHolder CookMenuRVViewHolder, int position) {
         final CookMenu cookMenu = cookMenus.get(position);
 
-        MenuRVViewHolder.setDishName(cookMenu.getDishName());
-        MenuRVViewHolder.setPrice(String.valueOf(cookMenu.getPrice()));
-        MenuRVViewHolder.setDescription(cookMenu.getDescription());
+        CookMenuRVViewHolder.setDishName(cookMenu.getDishName());
+        CookMenuRVViewHolder.setPrice(String.valueOf(cookMenu.getPrice()));
+        CookMenuRVViewHolder.setDescription(cookMenu.getDescription());
     }
 
     @Override
@@ -42,13 +42,13 @@ public class MenuRVAdapter extends RecyclerView.Adapter<MenuRVAdapter.MenuRVView
         return cookMenus == null? 0: cookMenus.size();
     }
 
-    public class MenuRVViewHolder extends RecyclerView.ViewHolder{
+    public class CookMenuRVViewHolder extends RecyclerView.ViewHolder{
 
         private TextView dishName;
         private TextView price;
         private TextView description;
 
-        public MenuRVViewHolder(@NonNull View itemView) {
+        public CookMenuRVViewHolder(@NonNull View itemView) {
             super(itemView);
             dishName = itemView.findViewById(R.id.tvDishNameValue);
             price = itemView.findViewById(R.id.tvPriceValue);

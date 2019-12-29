@@ -1,12 +1,12 @@
 package com.kumbil.neha;
 
-public class Menu {
+public class CookMenu {
 
     String dishName;
-    String price;
+    float price;
     String description;
 
-    public Menu(String dishName, String price, String description) {
+    public CookMenu(String dishName, float price, String description) {
         this.dishName = dishName;
         this.price = price;
         this.description = description;
@@ -16,7 +16,7 @@ public class Menu {
         return dishName;
     }
 
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
 

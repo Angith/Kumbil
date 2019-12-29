@@ -9,17 +9,17 @@ import java.util.ArrayList;
 
 public class CooksMenuActivity extends AppCompatActivity {
 
-    private ArrayList<Menu> menuItems = new ArrayList<>();
+    private ArrayList<CookMenu> cookMenuItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cooks_menu);
-        RecyclerView menus = (RecyclerView) findViewById(R.id.menu_rv);
-        menus.setLayoutManager(new LinearLayoutManager(this));
-        menus.setAdapter(new MenuRVAdapter(menuItems, this));
-        menuItems.add(new Menu("Biriyani", "120", "Kumbil special biriyani"));
-        menuItems.add(new Menu("Alpham Manthi", "600", "Kumbil special manthi"));
-        menuItems.add(new Menu("Kuzhi Manthi", "600", "Kumbil special manthi"));
+//        RecyclerView menus = (RecyclerView) findViewById(R.id.menu_rv);
+//        menus.setLayoutManager(new LinearLayoutManager(this));
+//        menus.setAdapter(new MenuRVAdapter(cookMenuItems, this));
+//        cookMenuItems.add(new CookMenu("Biriyani", "120", "Kumbil special biriyani"));
+//        cookMenuItems.add(new CookMenu("Alpham Manthi", "600", "Kumbil special manthi"));
+//        cookMenuItems.add(new CookMenu("Kuzhi Manthi", "600", "Kumbil special manthi"));
     }
 }

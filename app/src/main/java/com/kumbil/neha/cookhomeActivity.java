@@ -1,24 +1,41 @@
 package com.kumbil.neha;
 
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.kumbil.neha.Network.ApiClient;
+import com.kumbil.neha.Network.ApiInterface;
+import com.kumbil.neha.models.menu;
+import com.kumbil.neha.models.menuResp;
 import com.kumbil.neha.shared.SharedData;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class cookhomeActivity extends AppCompatActivity {
     Button CreateMenu;
+    TextView cooksName;
+    private ArrayList<CookMenu> menuItems = new ArrayList<>();
+    Context context = this;
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu mn) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.tool, menu);
+        getMenuInflater().inflate(R.menu.tool, mn);
         return true;
     }
 
@@ -26,15 +43,47 @@ public class cookhomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cookhome);
-        CreateMenuAlert cma = new CreateMenuAlert();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-        cma.show(ft, "dialog");
+        cooksName = (TextView) findViewById(R.id.etCooksNameValue);
+        String name = SharedData.getDefaults("NAME", GlobalContext.context);
+        cooksName.setText(name);
+        int id = Integer.parseInt(SharedData.getDefaults("ID", GlobalContext.context));
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<menuResp> getMenuCall = apiInterface.getMenu(id);
+        getMenuCall.enqueue(new Callback<menuResp>() {
+            @Override
+            public void onResponse(Call<menuResp> call, Response<menuResp> response) {
+                menuResp resp = response.body();
+                if(resp.getStatus() == 0 && resp.getMn().length > 0 )
+                {
+                    RecyclerView menus = (RecyclerView) findViewById(R.id.menu_rv);
+                    menus.setLayoutManager(new LinearLayoutManager(context));
+                    menus.setAdapter(new CookMenuRVAdapter(menuItems, context));
+                    menu[] mns = resp.getMn();
+                    for(int i = 0; i < resp.getMn().length; i++) {
+                        menuItems.add(new CookMenu(mns[i].getDishName(),mns[i].getPrice(),mns[i].getDescription()));
+                    }
+
+                } else if(resp.getStatus() == 0 && resp.getMn().length == 0) {
+                    CreateMenuAlert cma = new CreateMenuAlert();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+                    cma.show(ft, "dialog");
+                } else {
+                    Toast.makeText(cookhomeActivity.this,resp.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<menuResp> call, Throwable t) {
+                call.cancel();
+            }
+        });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

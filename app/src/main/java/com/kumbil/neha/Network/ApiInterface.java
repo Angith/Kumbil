@@ -5,10 +5,13 @@ import com.kumbil.neha.models.Resp;
 import com.kumbil.neha.models.User;
 import com.kumbil.neha.models.loginUser;
 import com.kumbil.neha.models.menu;
+import com.kumbil.neha.models.menuResp;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
     @POST("kumbil/register.php")
@@ -17,5 +20,8 @@ public interface ApiInterface {
     Call<LoginResp> login(@Body loginUser user);
     @POST("kumbil/postMenu.php")
     Call<Resp> createmenu(@Body menu mn);
+
+    @GET("kumbil/getMenu.php")
+    Call<menuResp> getMenu(@Query("id") int id);
 
 }

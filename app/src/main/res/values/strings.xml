@@ -10,7 +10,7 @@
     <string name="search">search</string>
     <string name="myOrders">My Orders</string>
     <string name="register_desc">Register</string>
-    <string name="dialog_create_menu">menu is empty</string>
-    <string name="createMenu">create menu</string>
+    <string name="dialog_create_menu">cookMenu is empty</string>
+    <string name="createMenu">create cookMenu</string>
     <string name="cancel">cancel</string>
 </resources>

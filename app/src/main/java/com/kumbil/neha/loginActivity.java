@@ -88,18 +88,21 @@ public class loginActivity extends AppCompatActivity {
                             Toast.makeText(loginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(loginActivity.this, cookhomeActivity.class);
                             SharedData.setDefaults("ID", Integer.toString(user.getId()), GlobalContext.context);
+                            SharedData.setDefaults("NAME", user.getName(), GlobalContext.context);
                             startActivity(i);
                             finish();
                         } else if (user.getType().equals("Customer")) {
                             Toast.makeText(loginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(loginActivity.this, CustomerActivity.class);
                             SharedData.setDefaults("ID", Integer.toString(user.getId()), GlobalContext.context);
+                            SharedData.setDefaults("NAME", user.getName(), GlobalContext.context);
                             startActivity(i);
                             finish();
                         } else if (user.getType().equals("Delivery")) {
                             Toast.makeText(loginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(loginActivity.this, CustomerActivity.class);
                             SharedData.setDefaults("ID", Integer.toString(user.getId()), GlobalContext.context);
+                            SharedData.setDefaults("NAME", user.getName(), GlobalContext.context);
                             startActivity(i);
                             finish();
                         } else {
