@@ -99,6 +99,13 @@ public class RequestedOrdersActivity extends AppCompatActivity {
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
 
+            case R.id.action_p_orders:
+                Intent in = new Intent(getApplicationContext(),PendingOrdersActivity.class);
+                //intn.putExtra("Name",uname);
+                startActivity(in);
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+
             case R.id.action_logout:
                 Intent intent = new Intent(getApplicationContext(),loginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -110,7 +110,12 @@ public class cookhomeActivity extends AppCompatActivity {
                 startActivity(i);
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
-
+            case R.id.action_p_orders:
+                Intent in = new Intent(getApplicationContext(),PendingOrdersActivity.class);
+                //intn.putExtra("Name",uname);
+                startActivity(in);
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
             case R.id.action_logout:
                 Intent intent = new Intent(getApplicationContext(),loginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -118,7 +123,6 @@ public class cookhomeActivity extends AppCompatActivity {
                 startActivity(intent);
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
-
 
             default:
                 // If we got here, the user's action was not recognized.

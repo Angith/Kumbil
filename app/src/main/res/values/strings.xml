@@ -4,7 +4,8 @@
     <string name="Caption">eat homely, stay healthy</string>
     <string name="edit">Edit Menu</string>
     <string name="home">Home</string>
-    <string name="orders">Orders</string>
+    <string name="new_orders">New Orders</string>
+    <string name="pending_orders">Pending Orders</string>
     <string name="notif">Notification</string>
     <string name="logout">Logout</string>
     <string name="cart">cart</string>

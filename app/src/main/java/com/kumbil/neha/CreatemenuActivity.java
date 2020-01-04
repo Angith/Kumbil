@@ -63,19 +63,27 @@ public class CreatemenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_home:
-                Intent intn = new Intent(getApplicationContext(), cookhomeActivity.class);
+                Intent intn = new Intent(getApplicationContext(),cookhomeActivity.class);
                 //intn.putExtra("Name",uname);
                 startActivity(intn);
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
             case R.id.action_orders:
-                Intent i = new Intent(getApplicationContext(), RequestedOrdersActivity.class);
+                Intent i = new Intent(getApplicationContext(),RequestedOrdersActivity.class);
                 //intn.putExtra("Name",uname);
                 startActivity(i);
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
+
+            case R.id.action_p_orders:
+                Intent in = new Intent(getApplicationContext(),PendingOrdersActivity.class);
+                //intn.putExtra("Name",uname);
+                startActivity(in);
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+
             case R.id.action_logout:
-                Intent intent = new Intent(getApplicationContext(), loginActivity.class);
+                Intent intent = new Intent(getApplicationContext(),loginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
