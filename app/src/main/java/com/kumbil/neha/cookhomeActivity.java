@@ -11,7 +11,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class cookhomeActivity extends AppCompatActivity {
-    Button CreateMenu;
+    ImageButton addMenu;
     TextView cooksName;
     private ArrayList<CookMenu> menuItems = new ArrayList<>();
     Context context = this;
@@ -44,6 +46,7 @@ public class cookhomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cookhome);
         cooksName = (TextView) findViewById(R.id.etCooksNameValue);
+        addMenu = (ImageButton) findViewById(R.id.addCookMenu);
         String name = SharedData.getDefaults("NAME", GlobalContext.context);
         cooksName.setText(name);
         int id = Integer.parseInt(SharedData.getDefaults("ID", GlobalContext.context));
@@ -82,13 +85,21 @@ public class cookhomeActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+
+        addMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(cookhomeActivity.this, CreatemenuActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_edit:
-                Intent intn = new Intent(getApplicationContext(),EditdishActivity.class);
+            case R.id.action_home:
+                Intent intn = new Intent(getApplicationContext(),cookhomeActivity.class);
                 //intn.putExtra("Name",uname);
                 startActivity(intn);
                 // User chose the "Settings" item, show the app settings UI...
@@ -99,13 +110,7 @@ public class cookhomeActivity extends AppCompatActivity {
                 startActivity(i);
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
-            case R.id.action_notif:
-                Intent in = new Intent(getApplicationContext(),Notification.class);
-               // in.putExtra("Name",uname);
-               // startActivity(in);
 
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
             case R.id.action_logout:
                 Intent intent = new Intent(getApplicationContext(),loginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

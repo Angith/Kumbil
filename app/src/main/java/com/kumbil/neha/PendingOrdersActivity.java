@@ -30,9 +30,9 @@ public class PendingOrdersActivity extends AppCompatActivity {
         rvOrders.setLayoutManager(new LinearLayoutManager(this));
         rvOrders.setAdapter(new PendingOrderRVAdapter(mOrders, this));
         mOrders.add(new Orders("Neha", "biriyani",
-                "10-2-2018 Wed  12pm", "1",  "null"));
+                "10-2-2018 Wed","12pm", 1,  "null"));
         mOrders.add(new Orders("Nayana", "alpham manthi",
-                "10-2-2018 Wed 12pm", "1", "null"));
+                "10-2-2018 Wed", "12pm", 1, "null"));
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.kumbil.neha.models.User;
 import com.kumbil.neha.models.loginUser;
 import com.kumbil.neha.models.menu;
 import com.kumbil.neha.models.menuResp;
+import com.kumbil.neha.models.ordersResp;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -23,5 +24,7 @@ public interface ApiInterface {
 
     @GET("kumbil/getMenu.php")
     Call<menuResp> getMenu(@Query("id") int id);
+    @GET("kumbil/getOrders.php")
+    Call<ordersResp> getOrders(@Query("status") String status, @Query("cookId") int id );
 
 }

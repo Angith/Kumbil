@@ -3,6 +3,7 @@
     <string name="logo_desc">KumbilLogo</string>
     <string name="Caption">eat homely, stay healthy</string>
     <string name="edit">Edit Menu</string>
+    <string name="home">Home</string>
     <string name="orders">Orders</string>
     <string name="notif">Notification</string>
     <string name="logout">Logout</string>
@@ -12,5 +13,6 @@
     <string name="register_desc">Register</string>
     <string name="dialog_create_menu">cookMenu is empty</string>
     <string name="createMenu">create cookMenu</string>
+    <string name="ok">ok</string>
     <string name="cancel">cancel</string>
 </resources>

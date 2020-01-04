@@ -24,8 +24,8 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_edit:
-                Intent intn = new Intent(getApplicationContext(),EditdishActivity.class);
+            case R.id.action_home:
+                Intent intn = new Intent(getApplicationContext(),cookhomeActivity.class);
                 //intn.putExtra("Name",uname);
                 startActivity(intn);
                 // User chose the "Settings" item, show the app settings UI...
@@ -34,13 +34,6 @@ public class NotificationActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(),RequestedOrdersActivity.class);
                 //intn.putExtra("Name",uname);
                 startActivity(i);
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
-            case R.id.action_notif:
-                //Intent in = new Intent(getApplicationContext(),RescueCpassword.class);
-                // in.putExtra("Name",uname);
-                // startActivity(in);
-
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
             case R.id.action_logout:

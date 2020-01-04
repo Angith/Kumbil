@@ -4,14 +4,16 @@ public class Orders {
 
     String UserName;
     String DishName;
-    String deliveryTime;
-    String Quantity;
+    String date;
+    String time;
+    int Quantity;
     String dAddress;
 
-    public Orders(String userName, String dishName, String time, String Quantity, String dAddress) {
+    public Orders(String userName, String dishName, String date, String time, int Quantity, String dAddress) {
         this.UserName = userName;
         this.DishName = dishName;
-        this.deliveryTime = time;
+        this.date = date;
+        this.time = time;
         this.Quantity = Quantity;
         this.dAddress = dAddress;
     }
@@ -24,15 +26,19 @@ public class Orders {
         return DishName;
     }
 
-    public String getDeliveryTime() {
-        return deliveryTime;
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public String getdAddress() {
         return dAddress;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return Quantity;
     }
 }

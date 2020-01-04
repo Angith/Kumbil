@@ -1,20 +1,16 @@
-<cookMenu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- "Mark Favorite", should appear as action button if possible -->
 
     <item
-        android:id="@+id/action_edit"
+        android:id="@+id/action_home"
         android:icon="@drawable/ic_more_vert_black_24dp"
-        android:title="@string/edit" />
+        android:title="@string/home" />
     <item
         android:id="@+id/action_orders"
         android:icon="@drawable/ic_more_vert_black_24dp"
         android:title="@string/orders" />
-    <item
-        android:id="@+id/action_notif"
-        android:icon="@drawable/ic_more_vert_black_24dp"
-        android:title="@string/notif" />
     <item
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_more_vert_black_24dp"
@@ -27,4 +23,4 @@
 <!-- Settings, should always be in the overflow -->
 
 
-</cookMenu>
+</menu>

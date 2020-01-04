@@ -58,6 +58,7 @@
     </android.support.v7.widget.RecyclerView>
 
     <ImageButton
+        android:id="@+id/addCookMenu"
         android:layout_width="60sp"
         android:layout_height="60sp"
         app:srcCompat="@drawable/ic_add"

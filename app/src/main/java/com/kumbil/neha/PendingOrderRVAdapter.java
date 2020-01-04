@@ -34,7 +34,8 @@ public class PendingOrderRVAdapter extends RecyclerView.Adapter<PendingOrderRVAd
 
         orderRVViewHolder.setUserName(order.getUserName());
         orderRVViewHolder.setDishName(order.getDishName());
-        orderRVViewHolder.setTime(order.getDeliveryTime());
+        orderRVViewHolder.setDate(order.getDate());
+        orderRVViewHolder.setTime(order.getTime());
         orderRVViewHolder.setQty(order.getQuantity());
         orderRVViewHolder.setDeliveryAddress(order.getdAddress());
     }
@@ -48,6 +49,7 @@ public class PendingOrderRVAdapter extends RecyclerView.Adapter<PendingOrderRVAd
 
         private TextView userName;
         private TextView dishName;
+        private TextView tvDate;
         private TextView time;
         private TextView qty;
         private TextView deliveryAddress;
@@ -56,6 +58,7 @@ public class PendingOrderRVAdapter extends RecyclerView.Adapter<PendingOrderRVAd
             super(itemView);
             userName = itemView.findViewById(R.id.etUsernameValue);
             dishName = itemView.findViewById(R.id.etDishnameValue);
+            tvDate = itemView.findViewById(R.id.etDateValue);
             time = itemView.findViewById(R.id.etTimeValue);
             qty = itemView.findViewById(R.id.etQtyValue);
             deliveryAddress = itemView.findViewById(R.id.etDeliveryAddressValue);
@@ -70,12 +73,17 @@ public class PendingOrderRVAdapter extends RecyclerView.Adapter<PendingOrderRVAd
             dishName.setText(dName);
         }
 
+        public void setDate(String date) {
+            tvDate.setText(date);
+        }
+
+
         public void setTime(String dTime) {
             time.setText(dTime);
         }
 
-        public void setQty(String Qty) {
-            qty.setText(Qty);
+        public void setQty(int Qty) {
+            qty.setText(Integer.toString(Qty));
         }
 
         public void setDeliveryAddress(String dAddress) {
