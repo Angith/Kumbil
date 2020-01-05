@@ -1,6 +1,8 @@
 package com.kumbil.neha;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import com.kumbil.neha.shared.SharedData;
 public class CreateAlert extends DialogFragment {
 
     String message;
+    CreateAlert context = this;
     public static CreateAlert newInstance(String message) {
         CreateAlert alert = new CreateAlert();
 
@@ -22,6 +25,33 @@ public class CreateAlert extends DialogFragment {
         alert.setArguments(args);
 
         return alert;
+    }
+
+    public static interface OnCompleteListener {
+        public abstract void onComplete(boolean ok);
+    }
+
+    private OnCompleteListener mListener;
+
+    // make sure the Activity implemented it
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Activity a;
+
+        if (context instanceof Activity){
+            a=(Activity) context;
+        } else {
+            a=getActivity();
+        }
+
+        try {
+            this.mListener = (OnCompleteListener)a;
+        }
+        catch (final ClassCastException e) {
+            throw new ClassCastException(a.toString() + " must implement OnCompleteListener");
+        }
     }
 
     @Override
@@ -38,6 +68,7 @@ public class CreateAlert extends DialogFragment {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dismiss();
+                        context.mListener.onComplete(true);
                     }
                 });
         // Create the AlertDialog object and return it

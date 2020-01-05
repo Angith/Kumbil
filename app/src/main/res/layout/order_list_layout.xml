@@ -165,7 +165,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <Button
-            android:id="@+id/bCancel"
+            android:id="@+id/bReject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
@@ -175,7 +175,7 @@
             android:textStyle="bold"
             android:textColor="@color/white" />
         <Button
-            android:id="@+id/bRegister"
+            android:id="@+id/bAccept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".3"

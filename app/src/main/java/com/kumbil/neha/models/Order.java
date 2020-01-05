@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Order {
 
+    @SerializedName("id")
+    int id;
     @SerializedName("name")
     String name;
     @SerializedName("address")
@@ -27,6 +29,10 @@ public class Order {
     @SerializedName("price")
     float Price;
 
+
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;

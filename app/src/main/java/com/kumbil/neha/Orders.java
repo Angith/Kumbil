@@ -2,6 +2,7 @@ package com.kumbil.neha;
 
 public class Orders {
 
+    int id;
     String UserName;
     String DishName;
     String date;
@@ -9,13 +10,18 @@ public class Orders {
     int Quantity;
     String dAddress;
 
-    public Orders(String userName, String dishName, String date, String time, int Quantity, String dAddress) {
+    public Orders(int id, String userName, String dishName, String date, String time, int Quantity, String dAddress) {
+        this.id = id;
         this.UserName = userName;
         this.DishName = dishName;
         this.date = date;
         this.time = time;
         this.Quantity = Quantity;
         this.dAddress = dAddress;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUserName() {

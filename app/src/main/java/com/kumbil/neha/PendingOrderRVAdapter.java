@@ -7,17 +7,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class PendingOrderRVAdapter extends RecyclerView.Adapter<PendingOrderRVAdapter.PendingOrderRVViewHolder> {
 
     public ArrayList<Orders> OrderList;
     private Context mContext;
-    public PendingOrderRVAdapter(ArrayList<Orders> data, Context context) {
+    private ClickListener listener;
+    public PendingOrderRVAdapter(ArrayList<Orders> data, Context context, ClickListener listener) {
         this.OrderList = data;
         this.mContext = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -25,7 +29,7 @@ public class PendingOrderRVAdapter extends RecyclerView.Adapter<PendingOrderRVAd
     public PendingOrderRVViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.pending_orders_list, viewGroup, false);
-        return new PendingOrderRVViewHolder(view);
+        return new PendingOrderRVViewHolder(view, listener);
     }
 
     @Override
@@ -45,7 +49,7 @@ public class PendingOrderRVAdapter extends RecyclerView.Adapter<PendingOrderRVAd
         return OrderList == null? 0: OrderList.size();
     }
 
-    public class PendingOrderRVViewHolder extends RecyclerView.ViewHolder{
+    public class PendingOrderRVViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView userName;
         private TextView dishName;
@@ -54,7 +58,9 @@ public class PendingOrderRVAdapter extends RecyclerView.Adapter<PendingOrderRVAd
         private TextView qty;
         private TextView deliveryAddress;
         private ConstraintLayout orders;
-        public PendingOrderRVViewHolder(@NonNull View itemView) {
+        private Button notify;
+        private WeakReference<ClickListener> listenerRef;
+        public PendingOrderRVViewHolder(@NonNull View itemView, ClickListener listener) {
             super(itemView);
             userName = itemView.findViewById(R.id.etUsernameValue);
             dishName = itemView.findViewById(R.id.etDishnameValue);
@@ -63,6 +69,16 @@ public class PendingOrderRVAdapter extends RecyclerView.Adapter<PendingOrderRVAd
             qty = itemView.findViewById(R.id.etQtyValue);
             deliveryAddress = itemView.findViewById(R.id.etDeliveryAddressValue);
             orders = itemView.findViewById(R.id.pendingOrdersConstraintlayout);
+
+            listenerRef = new WeakReference<>(listener);
+            notify = itemView.findViewById(R.id.bNotify);
+
+            notify.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listenerRef.get().onPositionClicked(getAdapterPosition(), true);
         }
 
         public void setUserName(String name) {
