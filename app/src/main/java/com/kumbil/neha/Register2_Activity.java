@@ -39,12 +39,14 @@ import com.kumbil.neha.Network.ApiInterface;
 import com.kumbil.neha.models.Resp;
 import com.kumbil.neha.models.User;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Register2_Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-    EditText username,password,place,email,phoneNo;
+    EditText username,password,place,email,phoneNo,address;
     Button Register, Cancel;
     Spinner type;
     String []typedata={"Cook","Delivery","Customer"};
@@ -56,6 +58,7 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
         username=(EditText)findViewById(R.id.etUsername);
         password=(EditText)findViewById(R.id.etPassword);
         place=(EditText)findViewById(R.id.etPlace);
+        address = (EditText) findViewById(R.id.etAddress);
         email=(EditText)findViewById(R.id.etEmail);
         phoneNo=(EditText)findViewById(R.id.etPhone);
         Register=(Button)findViewById(R.id.bRegister);
@@ -104,6 +107,11 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
             sets.show();
             place.requestFocus();
         }
+        else if (address.getText().length() == 0) {
+            sets.setMessage("Please input address ");
+            sets.show();
+            address.requestFocus();
+        }
         else if (email.getText().length() == 0) {
             sets.setMessage("Please input email");
             sets.show();
@@ -123,8 +131,10 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
                     phoneNo.getText().toString(),
                     email.getText().toString(),
                     place.getText().toString(),
+                    address.getText().toString(),
                     userType,
                     password.getText().toString(), "false");
+            Log.i("aaaaaaaaaaaaaaaa", user.toString());
             Call<Resp> registerCall = apiInterface.createuser(user);
             registerCall.enqueue(new Callback<Resp>() {
                 @Override

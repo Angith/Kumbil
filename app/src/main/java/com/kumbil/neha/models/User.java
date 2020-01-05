@@ -11,6 +11,8 @@ public class User {
     private String email;
     @SerializedName("place")
     private String place;
+    @SerializedName("address")
+    private String address;
     @SerializedName("type")
     private String type;
     @SerializedName("password")
@@ -19,12 +21,13 @@ public class User {
     private String loggedIn;
 
     public  User(String name, String phone,
-                 String email, String place, String type, String password, String loggedIn) {
+                 String email, String place, String address, String type, String password, String loggedIn) {
 
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.place = place;
+        this.address = address;
         this.type = type;
         this.password = password;
         this.loggedIn = loggedIn;
@@ -56,6 +59,14 @@ public class User {
 
     public String getLoggedIn() {
         return loggedIn;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void setName(String name) {
