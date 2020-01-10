@@ -8,6 +8,6 @@ public class cart_list_layout extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cart_list_layout);
+        setContentView(R.layout.customer_menu_layout);
     }
 }

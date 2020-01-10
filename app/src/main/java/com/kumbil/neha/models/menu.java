@@ -3,8 +3,8 @@ package com.kumbil.neha.models;
 import com.google.gson.annotations.SerializedName;
 
 public class menu {
-    @SerializedName("userId")
-    int UserId;
+    @SerializedName("id")
+    int DishId;
     @SerializedName("dishname")
     String DishName;
     @SerializedName("price")
@@ -12,11 +12,11 @@ public class menu {
     @SerializedName("description")
     String Description;
 
-    public menu(int UserId, String DishName, float Price, String Description) {
+    public menu(int DishId, String DishName, float Price, String Description) {
         this.DishName = DishName;
         this.Price = Price;
         this.Description = Description;
-        this.UserId = UserId;
+        this.DishId = DishId;
     }
 
     public String getDishName() {
@@ -31,7 +31,7 @@ public class menu {
         return Description;
     }
 
-    public int getUserId() {
-        return UserId;
+    public int getDishId() {
+        return DishId;
     }
 }

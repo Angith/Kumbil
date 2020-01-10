@@ -30,28 +30,28 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/etdelivery"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="delivery to"
-                android:inputType="textPersonName"
-                app:layout_constraintBottom_toTopOf="@+id/etqty"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
                 android:id="@+id/etqty"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="quantity"
                 android:inputType="number"
-                app:layout_constraintBottom_toTopOf="@id/etTime"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/etDate"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etdelivery" />
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <EditText
+                android:id="@+id/etDate"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="Date"
+                android:inputType="date"
+                android:layout_marginTop="15sp"
+                app:layout_constraintTop_toBottomOf="@id/etqty"
+                app:layout_constraintBottom_toTopOf="@id/etTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <EditText
                 android:id="@+id/etTime"
@@ -59,10 +59,10 @@
                 android:layout_height="wrap_content"
                 android:hint="time"
                 android:inputType="time"
-                app:layout_constraintBottom_toTopOf="@id/layoutButton"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etDate"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/layoutButton"/>
 
 
             <LinearLayout
@@ -72,8 +72,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etPhone">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <Button
                     android:id="@+id/bCancel"

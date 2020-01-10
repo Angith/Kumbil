@@ -134,7 +134,6 @@ public class Register2_Activity extends AppCompatActivity implements AdapterView
                     address.getText().toString(),
                     userType,
                     password.getText().toString(), "false");
-            Log.i("aaaaaaaaaaaaaaaa", user.toString());
             Call<Resp> registerCall = apiInterface.createuser(user);
             registerCall.enqueue(new Callback<Resp>() {
                 @Override

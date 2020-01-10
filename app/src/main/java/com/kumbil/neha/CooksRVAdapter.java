@@ -9,16 +9,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class CooksRVAdapter extends RecyclerView.Adapter<CooksRVAdapter.CooksRVViewHolder> {
 
     public ArrayList<Cooks> cookList;
     private Context mContext;
+    private final ClickListener listener;
     
-    public CooksRVAdapter(ArrayList<Cooks> data, Context context){
+    public CooksRVAdapter(ArrayList<Cooks> data, Context context, ClickListener listener){
         this.cookList = data;
         this.mContext = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -41,15 +44,18 @@ public class CooksRVAdapter extends RecyclerView.Adapter<CooksRVAdapter.CooksRVV
         return cookList == null? 0: cookList.size();
     }
 
-    public class CooksRVViewHolder extends RecyclerView.ViewHolder{
+    public class CooksRVViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView cooksName;
         private TextView cooksPlace;
+        private WeakReference<ClickListener> listenerRef;
 
         public CooksRVViewHolder(View view) {
             super(view);
             cooksName = (TextView) itemView.findViewById(R.id.tvCookName);
             cooksPlace = (TextView) itemView.findViewById(R.id.tvCooksPlace);
+            listenerRef = new WeakReference<>(listener);
+            itemView.setOnClickListener(this);
         }
 
         public void setCooksName(String name) {
@@ -58,6 +64,11 @@ public class CooksRVAdapter extends RecyclerView.Adapter<CooksRVAdapter.CooksRVV
 
         public void setCooksPlace(String place) {
             cooksPlace.setText(place);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listenerRef.get().onPositionClicked(getAdapterPosition(), true);
         }
     }
 }

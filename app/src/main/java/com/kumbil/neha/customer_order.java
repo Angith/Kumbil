@@ -1,6 +1,8 @@
 package com.kumbil.neha;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.kumbil.neha.Network.ApiClient;
+import com.kumbil.neha.Network.ApiInterface;
+import com.kumbil.neha.models.PostOrder;
+import com.kumbil.neha.models.Resp;
+import com.kumbil.neha.models.User;
+import com.kumbil.neha.shared.SharedData;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -30,25 +39,71 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class customer_order extends AppCompatActivity {
-EditText deliveryTo,quantity,time;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class customer_order extends AppCompatActivity implements CreateAlert.OnCompleteListener{
+EditText quantity,time, date;
 Button cancel,buy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.customer_order);
-        deliveryTo = (EditText) findViewById(R.id.etdelivery);
         quantity= (EditText) findViewById(R.id.etqty);
         time= (EditText) findViewById(R.id.etTime);
+        date= (EditText) findViewById(R.id.etDate);
         cancel= (Button) findViewById(R.id.bCancel);
         buy= (Button) findViewById(R.id.bRegister);
-
+        Intent mIntent = getIntent();
+        final int dishId = mIntent.getIntExtra("dishId", 0);
+        final int cookId = mIntent.getIntExtra("cookId", 0);
+        final int customerId =  Integer.parseInt(SharedData.getDefaults("ID", GlobalContext.context));
         buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(OrderCheck()) {
+                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    PostOrder pOrder = new PostOrder(
+                            cookId,
+                            customerId,
+                            dishId,
+                            "placed",
+                            date.getText().toString(),
+                            time.getText().toString(),
+                            Integer.parseInt(quantity.getText().toString()));
+                    Call<Resp> postOrderCall = apiInterface.postOrder(pOrder);
+                    postOrderCall.enqueue(new Callback<Resp>() {
+                        @Override
+                        public void onResponse(Call<Resp> call, Response<Resp> response) {
+                            Resp resp = response.body();
+                            if(resp.getStatus() == 0) {
+                                CreateAlert ca = CreateAlert.newInstance("Order placed");
+                                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                                Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+                                if (prev != null) {
+                                    ft.remove(prev);
+                                }
+                                ft.addToBackStack(null);
+                                ca.show(ft, "dialog");
+                            } else {
+                                CreateAlert ca = CreateAlert.newInstance(resp.getMessage());
+                                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                                Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+                                if (prev != null) {
+                                    ft.remove(prev);
+                                }
+                                ft.addToBackStack(null);
+                                ca.show(ft, "dialog");
+                            }
 
+                        }
+                        @Override
+                        public void onFailure(Call<Resp> call, Throwable t) {
+                            call.cancel();
+                        }
+                    });
                 }
                 else
                 {
@@ -70,14 +125,6 @@ Button cancel,buy;
         sets.setTitle("Error");
         sets.setIcon(android.R.drawable.btn_star_big_on);
         sets.setPositiveButton("Close", null);
-        if (deliveryTo.getText().length() == 0) {
-            sets.setMessage("Please input delivery address");
-            sets.show();
-            deliveryTo.requestFocus();
-            return false;
-
-        }
-
 
         if (quantity.getText().length() == 0) {
             sets.setMessage("Please input quantity");
@@ -93,71 +140,21 @@ Button cancel,buy;
             return false;
 
         }
-        String url="https://www.grapestechs.com/BCA_Disaster/register.php";
 
-        List<NameValuePair> params=new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("SdeliveryTo",deliveryTo.getText().toString()));
-        params.add(new BasicNameValuePair("Sqty",quantity.getText().toString()));
-        params.add(new BasicNameValuePair("Stime",time.getText().toString()));
-
-
-        String resultServer=getHttpPost(url,params);
-        String strStatusId="0";
-        String strError="Invalid order";
-        JSONObject C;
-        try
-        {
-            C=new JSONObject(resultServer);
-            strStatusId=C.getString("StatusID");
-            strError=C.getString("Error");
-
-        }
-        catch(JSONException e)
-        {
-            e.printStackTrace();
-        }
-        if(strStatusId.equals("0"))
-        {
-            sets.setMessage(strError);
+        if (date.getText().length() == 0) {
+            sets.setMessage("Please input date");
             sets.show();
+            time.requestFocus();
             return false;
+
         }
-        else {
-            Toast.makeText(this,"login success",Toast.LENGTH_SHORT).show();
-            Intent i=new Intent(customer_order.this,CustomerActivity.class);
-            startActivity(i);
-        }
+
         return true;
     }
-    public String getHttpPost(String url, List<NameValuePair> params) {
-        StringBuilder str = new StringBuilder();
-        HttpClient client = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(url);
 
+    @Override
+    public void onComplete(boolean ok) {
 
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(params));
-            HttpResponse response = client.execute(httpPost);
-            StatusLine statusLine;
-            statusLine = response.getStatusLine();
-            int statusCode = statusLine.getStatusCode();
-            if (statusCode == 200) { // Status OK
-                HttpEntity entity = response.getEntity();
-                InputStream content = entity.getContent();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    str.append(line);
-                }
-            } else {
-                Log.e("Log", "Failed to download result..");
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return str.toString();
     }
 }
 

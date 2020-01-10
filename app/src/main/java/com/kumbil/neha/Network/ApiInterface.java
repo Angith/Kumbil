@@ -1,6 +1,7 @@
 package com.kumbil.neha.Network;
 
 import com.kumbil.neha.models.LoginResp;
+import com.kumbil.neha.models.PostOrder;
 import com.kumbil.neha.models.Resp;
 import com.kumbil.neha.models.UpdateOrder;
 import com.kumbil.neha.models.User;
@@ -8,8 +9,8 @@ import com.kumbil.neha.models.loginUser;
 import com.kumbil.neha.models.menu;
 import com.kumbil.neha.models.menuResp;
 import com.kumbil.neha.models.ordersResp;
+import com.kumbil.neha.models.searchResp;
 
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -24,11 +25,15 @@ public interface ApiInterface {
     Call<LoginResp> login(@Body loginUser user);
     @POST("kumbil/postMenu.php")
     Call<Resp> createmenu(@Body menu mn);
+    @POST("kumbil/postOrder.php")
+    Call<Resp> postOrder(@Body PostOrder po);
 
     @GET("kumbil/getMenu.php")
     Call<menuResp> getMenu(@Query("id") int id);
     @GET("kumbil/getOrders.php")
     Call<ordersResp> getOrders(@Query("status") String status, @Query("cookId") int id );
+    @GET("kumbil/getUsers.php")
+    Call<searchResp> getUsers(@Query("key") String key, @Query("type") String type );
 
     @PATCH("kumbil/updateOrder.php")
     Call<Resp> updateOrders(@Body UpdateOrder uo);

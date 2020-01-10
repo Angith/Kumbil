@@ -28,7 +28,7 @@
         <activity android:name=".RequestedOrdersActivity" />
         <activity android:name=".cookhomeActivity" />
         <activity android:name=".NotificationActivity" />
-        <activity android:name=".CartActivity" />
+        <activity android:name=".CustomerMenuActivity" />
         <activity android:name=".deliveryActivity" />
         <activity android:name=".cart_list_layout" />
         <activity android:name=".cook_list_layout" />
@@ -36,6 +36,7 @@
         <activity android:name=".Address" />
         <activity android:name=".PendingOrdersActivity" />
         <activity android:name=".CooksMenuActivity"></activity>
+        <activity android:name=".customer_order"></activity>
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
     </application>
 
