@@ -7,38 +7,13 @@
     android:paddingBottom="6sp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:id="@+id/layoutUname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/etUsernameField"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".7"
-            android:text="UserName: "
-            android:textSize="18sp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/etUsernameValue"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".3"
-            android:text=""
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutDishname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/layoutUname"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
         <TextView
             android:id="@+id/etDishnameField"
@@ -135,47 +110,26 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/layoutDeliveryAddress"
+        android:id="@+id/layoutStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/layoutQty"
         app:layout_constraintStart_toStartOf="parent">
         <TextView
-            android:id="@+id/etDeliveryAddressField"
+            android:id="@+id/etStatusField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delivery Address: "
+            android:text="Status: "
             android:textSize="18sp"
             android:textStyle="bold" />
         <TextView
-            android:id="@+id/etDeliveryAddressValue"
+            android:id="@+id/etStatusValue"
             android:layout_width="match_parent"
             android:layout_height="60sp"
             android:text=""
             android:textSize="18sp"
             android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutAcceptButton"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/layoutDeliveryAddress"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <Button
-            android:id="@+id/bNotify"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/green"
-            android:layout_margin="10sp"
-            android:layout_marginRight="20sp"
-            android:layout_marginStart="20sp"
-            android:text="Notify Delivery Manager"
-            android:textStyle="bold"
-            android:textColor="@color/white" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

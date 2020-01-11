@@ -7,6 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +48,13 @@ import retrofit2.Response;
 public class customer_order extends AppCompatActivity implements CreateAlert.OnCompleteListener{
 EditText quantity,time, date;
 Button cancel,buy;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.tools, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +159,36 @@ Button cancel,buy;
         }
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Intent i = new Intent(getApplicationContext(),CustomerActivity.class);
+                //intn.putExtra("Name",uname);
+                startActivity(i);
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+            case R.id.action_myorders:
+                Intent in = new Intent(getApplicationContext(),CustomerOrders.class);
+                startActivity(in);
+                return true;
+            case R.id.action_logout:
+                Intent intent = new Intent(getApplicationContext(),loginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     @Override

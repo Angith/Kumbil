@@ -97,12 +97,6 @@ public class CustomerActivity extends AppCompatActivity implements CreateAlert.O
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_cart:
-                Intent intn = new Intent(getApplicationContext(),CustomerMenuActivity.class);
-                //intn.putExtra("Name",uname);
-                startActivity(intn);
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
             case R.id.action_search:
                 Intent i = new Intent(getApplicationContext(),CustomerActivity.class);
                 //intn.putExtra("Name",uname);
@@ -110,11 +104,8 @@ public class CustomerActivity extends AppCompatActivity implements CreateAlert.O
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
             case R.id.action_myorders:
-                Intent in = new Intent(getApplicationContext(),RequestedOrdersActivity.class);
-                // in.putExtra("Name",uname);
-                // startActivity(in);
-
-                // User chose the "Settings" item, show the app settings UI...
+                Intent in = new Intent(getApplicationContext(),CustomerOrders.class);
+                startActivity(in);
                 return true;
             case R.id.action_logout:
                 Intent intent = new Intent(getApplicationContext(),loginActivity.class);

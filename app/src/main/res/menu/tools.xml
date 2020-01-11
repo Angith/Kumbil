@@ -4,10 +4,6 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
 
     <item
-        android:id="@+id/action_cart"
-        android:icon="@drawable/ic_more_vert_black_24dp"
-        android:title="@string/cart" />
-    <item
         android:id="@+id/action_myorders"
         android:icon="@drawable/ic_more_vert_black_24dp"
         android:title="@string/myOrders"/>
@@ -19,12 +15,5 @@
         android:id="@+id/action_logout"
         android:icon="@drawable/ic_more_vert_black_24dp"
         android:title="@string/logout" />
-
-
-
-    <!-- app:showAsAction="ifRoom"-->/>
-
-<!-- Settings, should always be in the overflow -->
-
 
 </menu>

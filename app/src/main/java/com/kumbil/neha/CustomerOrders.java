@@ -8,15 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+
 import com.kumbil.neha.Network.ApiClient;
 import com.kumbil.neha.Network.ApiInterface;
-import com.kumbil.neha.models.menu;
-import com.kumbil.neha.models.menuResp;
+import com.kumbil.neha.models.Order;
+
+import com.kumbil.neha.models.ordersResp;
+import com.kumbil.neha.shared.SharedData;
 
 import java.util.ArrayList;
 
@@ -24,10 +26,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CustomerMenuActivity extends AppCompatActivity implements CreateAlert.OnCompleteListener{
+public class CustomerOrders extends AppCompatActivity {
 
-    private ArrayList<CustomerMenu> cMenus = new ArrayList<>();
+    private ArrayList<userOrder> cOrders = new ArrayList<>();
     Context context = this;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -38,37 +41,26 @@ public class CustomerMenuActivity extends AppCompatActivity implements CreateAle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_menu);
-        Intent mIntent = getIntent();
-        final int id = mIntent.getIntExtra("id", 0);
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<menuResp> getMenuCall = apiInterface.getMenu(id);
-        getMenuCall.enqueue(new Callback<menuResp>() {
-            @Override
-            public void onResponse(Call<menuResp> call, Response<menuResp> response) {
-                menuResp resp = response.body();
-                if(resp.getStatus() == 0 && resp.getMn().length > 0 )
-                {
-                    menu[] mns = resp.getMn();
-                    for(int i = 0; i < resp.getMn().length; i++) {
-                        cMenus.add(new CustomerMenu(mns[i].getDishId(), mns[i].getDishName(),
-                                mns[i].getPrice(),mns[i].getDescription()));
-                    }
-                    RecyclerView menus = (RecyclerView) findViewById(R.id.customer_menu_rv);
-                    menus.setLayoutManager(new LinearLayoutManager(context));
-                    menus.setAdapter(new CustomerMenuRVAdapter(cMenus, context, new ClickListener() {
-                        @Override
-                        public void onPositionClicked(int position, boolean accept) {
-                            int dishId = cMenus.get(position).getId();
-                            Intent intn = new Intent(getApplicationContext(),customer_order.class);
-                            intn.putExtra("dishId",dishId);
-                            intn.putExtra("cookId",id);
-                            startActivity(intn);
+        setContentView(R.layout.activity_customer_orders);
 
-                        }
-                    }));
-                } else if(resp.getStatus() == 0 && resp.getMn().length == 0) {
-                    CreateAlert ca = CreateAlert.newInstance("No items found");
+        int id = Integer.parseInt(SharedData.getDefaults("ID", GlobalContext.context));
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ordersResp> getUserOrdersCall = apiInterface.getUserOrders(id);
+        getUserOrdersCall.enqueue(new Callback<ordersResp>() {
+            @Override
+            public void onResponse(Call<ordersResp> call, Response<ordersResp> response) {
+                ordersResp resp = response.body();
+                if (resp.getStatus() == 0 && resp.getOrdrs().length > 0) {
+                    Order[] ordrs = resp.getOrdrs();
+                    for (int i = 0; i < resp.getOrdrs().length; i++) {
+                        cOrders.add(new userOrder(ordrs[i].getDishName(), ordrs[i].getDate(),
+                                ordrs[i].getTime(),ordrs[i].getQuantity(),ordrs[i].getStatus()));
+                    }
+                    RecyclerView rvOrders = (RecyclerView) findViewById(R.id.customer_orders_rv);
+                    rvOrders.setLayoutManager(new LinearLayoutManager(context));
+                    rvOrders.setAdapter(new CustomerOrdersRVAdapter(cOrders, context));
+                } else if(resp.getStatus() == 0 && resp.getOrdrs().length == 0) {
+                    CreateAlert ca = CreateAlert.newInstance("Orders empty");
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
                     if (prev != null) {
@@ -77,14 +69,16 @@ public class CustomerMenuActivity extends AppCompatActivity implements CreateAle
                     ft.addToBackStack(null);
                     ca.show(ft, "dialog");
                 } else {
-                    Toast.makeText(CustomerMenuActivity.this,resp.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomerOrders.this,resp.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
-            public void onFailure(Call<menuResp> call, Throwable t) {
+            public void onFailure(Call<ordersResp> call, Throwable t) {
                 call.cancel();
             }
         });
+
     }
 
     @Override
@@ -115,10 +109,5 @@ public class CustomerMenuActivity extends AppCompatActivity implements CreateAle
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-
-    @Override
-    public void onComplete(boolean ok) {
-
     }
 }

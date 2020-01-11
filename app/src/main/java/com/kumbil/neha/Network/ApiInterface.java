@@ -32,6 +32,8 @@ public interface ApiInterface {
     Call<menuResp> getMenu(@Query("id") int id);
     @GET("kumbil/getOrders.php")
     Call<ordersResp> getOrders(@Query("status") String status, @Query("cookId") int id );
+    @GET("kumbil/getUserOrders.php")
+    Call<ordersResp> getUserOrders(@Query("userId") int id );
     @GET("kumbil/getUsers.php")
     Call<searchResp> getUsers(@Query("key") String key, @Query("type") String type );
 

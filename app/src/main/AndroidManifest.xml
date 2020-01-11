@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kumbil.neha">
-    <uses-permission  android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:allowBackup="true"
         android:name=".GlobalContext"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
+        android:theme="@style/AppTheme">
+        <activity android:name=".CustomerOrders"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,9 +37,12 @@
         <activity android:name=".edit_activity" />
         <activity android:name=".Address" />
         <activity android:name=".PendingOrdersActivity" />
-        <activity android:name=".CooksMenuActivity"></activity>
-        <activity android:name=".customer_order"></activity>
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        <activity android:name=".CooksMenuActivity" />
+        <activity android:name=".customer_order" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 
 </manifest>
