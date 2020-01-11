@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.kumbil.neha.Network.ApiClient;
 import com.kumbil.neha.Network.ApiInterface;
+import com.kumbil.neha.models.Delivery;
 import com.kumbil.neha.models.Order;
 import com.kumbil.neha.models.Resp;
 import com.kumbil.neha.models.UpdateOrder;
@@ -44,7 +45,7 @@ public class PendingOrdersActivity extends AppCompatActivity implements CreateAl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_orders);
 
-        int id = Integer.parseInt(SharedData.getDefaults("ID", GlobalContext.context));
+        final int id = Integer.parseInt(SharedData.getDefaults("ID", GlobalContext.context));
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ordersResp> getOrdersCall = apiInterface.getOrders("accepted", id);
 
@@ -65,7 +66,8 @@ public class PendingOrdersActivity extends AppCompatActivity implements CreateAl
                     rvOrders.setAdapter(new PendingOrderRVAdapter(mOrders, context, new ClickListener() {
                         @Override
                         public void onPositionClicked(int position, boolean accept) {
-                            UpdateOrder update = new UpdateOrder("delivered", mOrders.get(position).getId());
+                            final Orders orders = mOrders.get(position);
+                            UpdateOrder update = new UpdateOrder("cooked", mOrders.get(position).getId());
                             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
                             Call<Resp> getUpdateCall = apiInterface.updateOrders(update);
                             getUpdateCall.enqueue(new Callback<Resp>() {
@@ -73,14 +75,40 @@ public class PendingOrdersActivity extends AppCompatActivity implements CreateAl
                                 public void onResponse(Call<Resp> call, Response<Resp> response) {
                                     Resp r = response.body();
                                     if(r.getStatus() == 0) {
-                                        CreateAlert ca = CreateAlert.newInstance("Notified Delivery Manger");
-                                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                                        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-                                        if (prev != null) {
-                                            ft.remove(prev);
-                                        }
-                                        ft.addToBackStack(null);
-                                        ca.show(ft, "dialog");
+                                        String deliveryTime = orders.getDate() + ":" +orders.getTime();
+                                        Delivery delivery = new Delivery(id, orders.getdAddress(),
+                                                deliveryTime, "cooked");
+                                        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                                        Call<Resp> deliveryCall = apiInterface.notify(delivery);
+                                        deliveryCall.enqueue(new Callback<Resp>() {
+                                            @Override
+                                            public void onResponse(Call<Resp> call, Response<Resp> response) {
+                                                Resp re = response.body();
+                                                if(re.getStatus() == 0){
+                                                    CreateAlert ca = CreateAlert.newInstance("Notified Delivery Manger");
+                                                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                                                    Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+                                                    if (prev != null) {
+                                                        ft.remove(prev);
+                                                    }
+                                                    ft.addToBackStack(null);
+                                                    ca.show(ft, "dialog");
+                                                } else {
+                                                    CreateAlert ca = CreateAlert.newInstance("Could not notify");
+                                                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                                                    Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+                                                    if (prev != null) {
+                                                        ft.remove(prev);
+                                                    }
+                                                    ft.addToBackStack(null);
+                                                    ca.show(ft, "dialog");
+                                                }
+                                            }
+                                            @Override
+                                            public void onFailure(Call<Resp> call, Throwable t) {
+                                                call.cancel();
+                                            }
+                                        });
                                     } else {
                                         CreateAlert ca = CreateAlert.newInstance("Could not notify");
                                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

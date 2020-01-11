@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.kumbil.neha.Network.ApiClient;
 import com.kumbil.neha.Network.ApiInterface;
+import com.kumbil.neha.models.Delivery;
 import com.kumbil.neha.models.LoginResp;
 import com.kumbil.neha.models.LoginRespUser;
 import com.kumbil.neha.models.loginUser;
@@ -100,7 +101,7 @@ public class loginActivity extends AppCompatActivity {
                             finish();
                         } else if (user.getType().equals("Delivery")) {
                             Toast.makeText(loginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(loginActivity.this, CustomerActivity.class);
+                            Intent i = new Intent(loginActivity.this, deliveryActivity.class);
                             SharedData.setDefaults("ID", Integer.toString(user.getId()), GlobalContext.context);
                             SharedData.setDefaults("NAME", user.getName(), GlobalContext.context);
                             startActivity(i);

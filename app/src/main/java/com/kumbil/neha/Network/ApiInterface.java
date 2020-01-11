@@ -1,5 +1,6 @@
 package com.kumbil.neha.Network;
 
+import com.kumbil.neha.models.Delivery;
 import com.kumbil.neha.models.LoginResp;
 import com.kumbil.neha.models.PostOrder;
 import com.kumbil.neha.models.Resp;
@@ -27,6 +28,8 @@ public interface ApiInterface {
     Call<Resp> createmenu(@Body menu mn);
     @POST("kumbil/postOrder.php")
     Call<Resp> postOrder(@Body PostOrder po);
+    @POST("kumbil/deliveryNotification.php")
+    Call<Resp> notify(@Body Delivery dry);
 
     @GET("kumbil/getMenu.php")
     Call<menuResp> getMenu(@Query("id") int id);
