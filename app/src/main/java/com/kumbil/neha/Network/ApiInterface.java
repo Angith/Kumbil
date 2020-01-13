@@ -2,6 +2,7 @@ package com.kumbil.neha.Network;
 
 import com.kumbil.neha.models.Delivery;
 import com.kumbil.neha.models.LoginResp;
+import com.kumbil.neha.models.NotificationsResp;
 import com.kumbil.neha.models.PostOrder;
 import com.kumbil.neha.models.Resp;
 import com.kumbil.neha.models.UpdateOrder;
@@ -39,8 +40,12 @@ public interface ApiInterface {
     Call<ordersResp> getUserOrders(@Query("userId") int id );
     @GET("kumbil/getUsers.php")
     Call<searchResp> getUsers(@Query("key") String key, @Query("type") String type );
+    @GET("kumbil/getNotifications.php")
+    Call<NotificationsResp> getNotifications(@Query("status") String status);
 
     @PATCH("kumbil/updateOrder.php")
     Call<Resp> updateOrders(@Body UpdateOrder uo);
+    @PATCH("kumbil/updateNotification.php")
+    Call<Resp> updateNotification(@Query("id") int id);
 
 }

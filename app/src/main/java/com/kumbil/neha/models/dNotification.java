@@ -3,6 +3,8 @@ package com.kumbil.neha.models;
 import com.google.gson.annotations.SerializedName;
 
 public class dNotification {
+    @SerializedName("id")
+    private int id;
     @SerializedName("sAddress")
     private String sAddress;
     @SerializedName("dAddress")
@@ -12,11 +14,15 @@ public class dNotification {
     @SerializedName("status")
     private String status;
 
-    public dNotification(String sAddress, String dAddress, String deliveryTime, String status) {
+    public dNotification(int id, String sAddress, String dAddress, String deliveryTime, String status) {
         this.sAddress = sAddress;
         this.dAddress = dAddress;
         this.deliveryTime = deliveryTime;
         this.status = status;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getsAddress() {
