@@ -16,4 +16,5 @@
     <string name="createMenu">create cookMenu</string>
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
+    <string name="profile">profile</string>
 </resources>

@@ -15,6 +15,7 @@ public class dNotification {
     private String status;
 
     public dNotification(int id, String sAddress, String dAddress, String deliveryTime, String status) {
+        this.id =id;
         this.sAddress = sAddress;
         this.dAddress = dAddress;
         this.deliveryTime = deliveryTime;

@@ -29,6 +29,7 @@
         <activity android:name=".CustomerActivity" />
         <activity android:name=".RequestedOrdersActivity" />
         <activity android:name=".cookhomeActivity" />
+        <activity android:name=".profileActivity"></activity>
         <activity android:name=".NotificationActivity" />
         <activity android:name=".CustomerMenuActivity" />
         <activity android:name=".deliveryActivity" />

@@ -103,6 +103,12 @@ public class CustomerActivity extends AppCompatActivity implements CreateAlert.O
                 startActivity(i);
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
+            case R.id.action_profile:
+                Intent pa = new Intent(getApplicationContext(),profileActivity.class);
+                //intn.putExtra("Name",uname);
+                startActivity(pa);
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
             case R.id.action_myorders:
                 Intent in = new Intent(getApplicationContext(),CustomerOrders.class);
                 startActivity(in);

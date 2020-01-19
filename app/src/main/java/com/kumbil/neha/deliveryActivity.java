@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -27,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class deliveryActivity extends AppCompatActivity {
+public class deliveryActivity extends AppCompatActivity implements CreateAlert.OnCompleteListener {
 
     private ArrayList<dNotification> mOrders = new ArrayList<>();
     Context context = this;
@@ -124,6 +125,31 @@ public class deliveryActivity extends AppCompatActivity {
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    @Override
+    public void onComplete(boolean ok) {
+        if(ok){
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+            Call<NotificationsResp> getNotificationsCall = apiInterface.getNotifications("cooked");
+            getNotificationsCall.enqueue(new Callback<NotificationsResp>() {
+                @Override
+                public void onResponse(Call<NotificationsResp> call, Response<NotificationsResp> response) {
+                    final NotificationsResp res = response.body();
+                    if (res.getStatus() == 0 && res.getDn().length > 0) {
+                        Intent intn = new Intent(getApplicationContext(),deliveryActivity.class);
+                        startActivity(intn);
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<NotificationsResp> call, Throwable t) {
+                    call.cancel();
+                }
+            });
 
         }
     }

@@ -165,6 +165,12 @@ public class RequestedOrdersActivity extends AppCompatActivity implements Create
                 startActivity(intn);
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
+            case R.id.action_profile:
+                Intent pa = new Intent(getApplicationContext(),profileActivity.class);
+                //intn.putExtra("Name",uname);
+                startActivity(pa);
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
             case R.id.action_orders:
                 Intent i = new Intent(getApplicationContext(),RequestedOrdersActivity.class);
                 //intn.putExtra("Name",uname);

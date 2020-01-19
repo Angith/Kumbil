@@ -40,7 +40,7 @@ public class DeliveryNotificationAdapter extends RecyclerView.Adapter<DeliveryNo
 
         notificationViewHolder.setSourceAddress(nfn.getsAddress());
         notificationViewHolder.setDestinationAddress(nfn.getdAddress());
-        notificationViewHolder.setTime(nfn.getdAddress());
+        notificationViewHolder.setTime(nfn.getDeliveryTime());
         notificationViewHolder.setStatus(nfn.getStatus());
     }
 
@@ -55,7 +55,7 @@ public class DeliveryNotificationAdapter extends RecyclerView.Adapter<DeliveryNo
         private TextView dAddress;
         private TextView time;
         private TextView status;
-        private Button bNotify;
+        private Button bDelivered;
         private WeakReference<ClickListener> listenerRef;
 
         public DeliveryNotificationViewHolder(@NonNull View itemView, ClickListener listener) {
@@ -66,8 +66,8 @@ public class DeliveryNotificationAdapter extends RecyclerView.Adapter<DeliveryNo
             status = itemView.findViewById(R.id.etStatusValue);
             listenerRef = new WeakReference<>(listener);
 
-            bNotify = itemView.findViewById(R.id.bDelivery);
-            bNotify.setOnClickListener(this);
+            bDelivered = itemView.findViewById(R.id.bDelivery);
+            bDelivered.setOnClickListener(this);
         }
 
         public void setSourceAddress(String address) {
