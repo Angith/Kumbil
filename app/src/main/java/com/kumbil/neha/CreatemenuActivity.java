@@ -18,6 +18,7 @@ import com.kumbil.neha.Network.ApiInterface;
 import com.kumbil.neha.models.Resp;
 import com.kumbil.neha.models.User;
 import com.kumbil.neha.models.menu;
+import com.kumbil.neha.models.postMenu;
 import com.kumbil.neha.shared.SharedData;
 
 import retrofit2.Call;
@@ -131,7 +132,7 @@ public class CreatemenuActivity extends AppCompatActivity {
     int id = Integer.parseInt(SharedData.getDefaults("ID", GlobalContext.context));
         float price = Float.valueOf(Price.getText().toString());
     ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-    menu mn = new menu(
+    postMenu mn = new postMenu(
             id,
             DishName.getText().toString(),
             price,

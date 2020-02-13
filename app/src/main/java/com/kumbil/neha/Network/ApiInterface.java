@@ -8,9 +8,9 @@ import com.kumbil.neha.models.Resp;
 import com.kumbil.neha.models.UpdateOrder;
 import com.kumbil.neha.models.User;
 import com.kumbil.neha.models.loginUser;
-import com.kumbil.neha.models.menu;
 import com.kumbil.neha.models.menuResp;
 import com.kumbil.neha.models.ordersResp;
+import com.kumbil.neha.models.postMenu;
 import com.kumbil.neha.models.searchResp;
 
 import retrofit2.Call;
@@ -26,7 +26,7 @@ public interface ApiInterface {
     @POST("kumbil/login.php")
     Call<LoginResp> login(@Body loginUser user);
     @POST("kumbil/postMenu.php")
-    Call<Resp> createmenu(@Body menu mn);
+    Call<Resp> createmenu(@Body postMenu mn);
     @POST("kumbil/postOrder.php")
     Call<Resp> postOrder(@Body PostOrder po);
     @POST("kumbil/deliveryNotification.php")
